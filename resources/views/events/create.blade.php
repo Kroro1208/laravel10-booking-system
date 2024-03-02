@@ -1,109 +1,129 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('New Events') }}
-        </h2>
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('New Event') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <form method="POST" action="{{route('events.store')}}" x-data="{
-                    country: null,
-                    city: null,
-                    cities: null,
-                    onCountryChange(event) {
-                        axios.get(`/countries/${event.target.value}`).then(res => {
-                            this.cities = res.data
-                        });
-                    }
-                }" enctype="multipart/form-data" class="p-4 bg-white dark:bg-slate-800 rounded-md">
-                    @csrf
-                    <div class="grid gap-6 mb-6 md:grid-cols-2">
-                        <div>
-                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">タイトル</label>
-                            <input type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('title')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">オプションを選んでください</label>
-                            <select id="country_id" x-model="country" x-on:change="onCountryChange" name="country_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500">
-                                <option>開催国を選んでください</option>
-                                @foreach($counties as $country)
-                                <option :value="{{$country->id}}">{{$country->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('country_id')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="city_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">オプションを選んでください</label>
-                            <select id="city_id" name="city_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500">
-                                <template x-for="city i cities" :key="city.id">
-                                    <option x-bind:value="city.id" x-text="city.name"></option>
-                                </template>
-                            </select>
-                            @error('city_id')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">住所</label>
-                            <input type="text" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('address')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="file_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">画像をアップロード</label>
-                            <input type="file" id="file_input" name="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('image')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催日</label>
-                            <input type="date" id="start_date" name="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('start_date')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">終了日</label>
-                            <input type="date" id="end_date" name="end_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('end_date')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催時間</label>
-                            <input type="date" id="start_time" name="start_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="新規イベント名">
-                            @error('time')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="num_tickets" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">購入枚数</label>
-                            <input type="date" id="num_tickets" name="num_tickets" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500">
-                            @error('num_tickets')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">説明</label>
-                            <textarea type="date" id="description" name="description" class="block p-2.5 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500" placeholder="イベントの詳細"></textarea>
-                            @error('description')
-                            <div class="text-sm text-red-400">{{$message}}</div>
-                            @enderror
-                        </div>
-
-
+            <form method="POST" action="{{ route('events.store') }}" x-data="{
+                country: null,
+                city: null,
+                cities: [],
+                onCountryChange(event) {
+                    axios.get(`/countries/${event.target.value}`).then(res => {
+                        this.cities = res.data
+                    })
+            
+                }
+            }" enctype="multipart/form-data" class="p-4 bg-white dark:bg-slate-800 rounded-md">
+                @csrf
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">イベント名</label>
+                        <input type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        @error('title')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
                     </div>
-                </form>
-            </div>
+                    <div>
+                        <label for="country_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">選択してください</label>
+                        <select id="country_id" x-model="country" x-on:change="onCountryChange" name="country_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option>開催国</option>
+                            @foreach ($countries as $country)
+                            <option :value="{{ $country->id }}">{{ $country->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('country_id')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="city_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">選択してください</label>
+                        <select id="city_id" name="city_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <template x-for="city in cities" :key="city.id">
+                                <option x-bind:value="city.id" x-text="city.name"></option>
+                            </template>
+                        </select>
+                        @error('city_id')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催場所</label>
+                        <input type="text" id="address" name="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="開催場所の住所を入力してください">
+                        @error('address')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">画像アップロード</label>
+                        <input class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" name="image">
+                        @error('image')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催日</label>
+                        <input type="date" id="start_date" name="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        @error('start_date')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">終了日</label>
+                        <input type="date" id="end_date" name="end_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        @error('end_date')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催時間</label>
+                        <input type="time" id="start_time" name="start_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        @error('start_time')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="num_tickets" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">チケット枚数</label>
+                        <input type="number" id="num_tickets" name="num_tickets" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1">
+                        @error('num_tickets')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">イベント詳細</label>
+                        <textarea id="description" name="description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="イベントの詳細を記載してください"></textarea>
+                        @error('description')
+                        <div class="text-sm text-red-400">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                {{--
+                <div>
+                    <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Tags</h3>
+                    <ul
+                        class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        @foreach ($tags as $tag)
+                            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                                <div class="flex items-center pl-3">
+                                    <input id="vue-checkbox-list" type="checkbox" name="tags[]"
+                                        value="{{ $tag->id }}"
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="vue-checkbox-list" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $tag->name }}</label>
         </div>
+        </li>
+        @endforeach
+        </ul>
+    </div>
+    --}}
+    <div>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create</button>
+    </div>
+    </form>
+    </div>
     </div>
 </x-app-layout>
