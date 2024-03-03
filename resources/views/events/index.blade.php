@@ -43,7 +43,7 @@
                                 {{$event->country->name}}
                             </td>
                             <td class="px-6 py-4">
-                                編集　削除
+                                <a href="{{route('events.edit', $event)}}" class="text-slate-800 hover:text-green-600 border bg-green-400 border-gray-100 rounded-full py-2 px-4">編集</a>
                             </td>
                         </tr>
                         @empty

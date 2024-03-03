@@ -61,4 +61,10 @@ class Event extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    // hasTag($tag)は、LaravelのEloquentモデルで定義されているメソッドの一例で、特定のモデルが特定のタグを持っているかどうかをチェックできる。
+    public function hasTag($tag)
+    {
+        return $this->tags->contains($tag); // $thisはEventモデル
+    }
 }
