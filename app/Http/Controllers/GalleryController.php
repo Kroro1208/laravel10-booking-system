@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gallery;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -11,7 +13,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('galleries.index');
+        $galleries = auth()->user()->galleries;
+        return view('galleries.index', compact('galleries'));
     }
 
     /**
@@ -19,7 +22,8 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        $galleries = Gallery::all();
+        return view('galleries.create', compact('galleries'));
     }
 
     /**
