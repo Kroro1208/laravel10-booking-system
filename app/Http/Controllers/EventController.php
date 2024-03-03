@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Country;
 use App\Models\Event;
 use App\Models\Tag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $events = Event::with('country')->get(); // eager loading(N+1問題対応)
         return view('events.index', compact('events'));
@@ -27,7 +28,7 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
         $countries = Country::all();
         $tags = Tag::all();
@@ -37,7 +38,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateEventRequest $request)
+    public function store(CreateEventRequest $request): RedirectResponse
     {
         if ($request->hasFile('image')) {
             $data = $request->validated();
@@ -65,7 +66,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(Event $event): View
     {
         $countries = Country::all();
         $tags = Tag::all();
@@ -86,7 +87,7 @@ class EventController extends Controller
         $data['slug'] = Str::slug($request->title);
         $event->update($data);
         // sync()は、LaravelのEloquentリレーションシップで多対多の関係を扱うときに使用する。
-        // 中間テーブルのレコードを、指定されたIDのセットで「同期」させて、一度に追加と削除の両方を行うことができ。
+        // 中間テーブルのレコードを指定されたIDで「同期」させて、一度に追加と削除の両方を行うことができ。
         $event->tags()->sync($request->tags);
         return to_route('events.index');
     }
@@ -94,8 +95,11 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event): RedirectResponse
     {
-        //
+        Storage::delete($event->image);
+        $event->tags()->detach();
+        $event->delete();
+        return to_route('events.index');
     }
 }

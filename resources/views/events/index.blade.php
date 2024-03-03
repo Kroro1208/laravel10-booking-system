@@ -43,11 +43,25 @@
                                 {{$event->country->name}}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="{{route('events.edit', $event)}}" class="text-slate-800 hover:text-green-600 border bg-green-400 border-gray-100 rounded-full py-2 px-4">編集</a>
+                                <div class="flex items-center gap-5">
+                                    <a href="{{route('events.edit', $event)}}" class="text-gray-900 bg-green-400 hover:text-white hover:bg-green-600 border-gray-100 rounded-full py-2 px-4">編集</a>
+                                    <form method="POST" action="{{ route('events.destroy', $event) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a href="{{ route('events.destroy', $event) }}" onclick="event.preventDefault();
+                                                    this.closest('form').submit();" class="text-gray-900 border bg-red-400 hover:bg-red-600 hover:text-white rounded-full py-2 px-4">
+                                            イベント削除
+                                        </a>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
-                        <h1>現在イベントはありません</h1>
+                        <tr>
+                            <td colspan=4 class="px-6 py-4 text-center text-gray-500dark:text-gray-400">
+                                現在イベントはありません
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
