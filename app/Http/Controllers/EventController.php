@@ -85,6 +85,8 @@ class EventController extends Controller
 
         $data['slug'] = Str::slug($request->title);
         $event->update($data);
+        // sync()は、LaravelのEloquentリレーションシップで多対多の関係を扱うときに使用する。
+        // 中間テーブルのレコードを、指定されたIDのセットで「同期」させて、一度に追加と削除の両方を行うことができ。
         $event->tags()->sync($request->tags);
         return to_route('events.index');
     }
