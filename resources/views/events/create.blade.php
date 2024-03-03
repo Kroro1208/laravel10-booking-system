@@ -68,28 +68,28 @@
                     </div>
                     <div>
                         <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催日</label>
-                        <input type="date" id="start_date" name="start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        <input type="date" id="start_date" name="start_date" value="{{old('start_date')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
                         @error('start_date')
                         <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
                         <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">終了日</label>
-                        <input type="date" id="end_date" name="end_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        <input type="date" id="end_date" name="end_date" value="{{old('end_date')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
                         @error('end_date')
                         <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
                         <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">開催時間</label>
-                        <input type="time" id="start_time" name="start_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
+                        <input type="time" id="start_time" name="start_time" value="{{old('start_time')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Laravel event">
                         @error('start_time')
                         <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
                     </div>
                     <div>
                         <label for="num_tickets" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">チケット枚数</label>
-                        <input type="number" id="num_tickets" name="num_tickets" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1">
+                        <input type="number" id="num_tickets" name="num_tickets" value="{{old('num_tickets')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1">
                         @error('num_tickets')
                         <div class="text-sm text-red-400">{{ $message }}</div>
                         @enderror
