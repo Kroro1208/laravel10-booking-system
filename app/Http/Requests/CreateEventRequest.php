@@ -27,11 +27,12 @@ class CreateEventRequest extends FormRequest
             'image' => 'image|required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'time' => 'required',
+            'start_time' => 'required',
             'country_id' => 'required',
             'city_id' => 'required',
             'description' => 'required',
             'num_tickets' => 'required',
+            'tags.*' => 'required|exists:tags,id' // tagsはテーブル名、idはそのテーブル内で存在を確認したいカラム名
         ];
     }
 }

@@ -18,7 +18,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('events.index');
+        $events = Event::with('country')->get(); // eager loading(N+1問題対応)
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -43,8 +44,9 @@ class EventController extends Controller
             $data['user_id'] = auth()->id();
             $data['slug'] = Str::slug($request->title); // Str::slug()は、与えられた文字列を URL に適した「スラッグ」形式に変換
 
-            Event::create($data);
-            return view('events.index');
+            $event = Event::create($data);
+            $event->tags()->attach($request->tags);
+            return to_route('events.index');
         } else {
             return back();
         }
