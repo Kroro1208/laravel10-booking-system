@@ -48,14 +48,6 @@ class GalleryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Gallery $gallery)
@@ -75,7 +67,7 @@ class GalleryController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1048',
         ]);
 
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             Storage::delete($gallery->image);
             $path = $request->file('image')->store('galleries', 'public');
         }
