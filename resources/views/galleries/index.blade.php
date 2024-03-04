@@ -30,8 +30,8 @@
                     <tbody>
                         @forelse($galleries as $gallery)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" class="px-6 py-4 font-medium to-gray-900 whitespace-nowrap dark:text-white">
-                                <img src="{{asset('storage/'.$gallery->image)}}" class="w-20 h-20">
+                            <th scope="row" class="px-4 py-3 font-medium to-gray-900 whitespace-nowrap dark:text-white">
+                                <img src="{{asset('storage/'.$gallery->image)}}" class="w-20 h-20 rounded-lg">
                             </th>
                             <td class="px-6 py-4">
                                 {{$gallery->caption}}
@@ -44,7 +44,7 @@
                                         @method('DELETE')
                                         <a href="{{ route('galleries.destroy', $gallery) }}" onclick="event.preventDefault();
                                                     this.closest('form').submit();" class="text-gray-900 border bg-red-400 hover:bg-red-600 hover:text-white rounded-full py-2 px-4">
-                                            イベント削除
+                                            画像削除
                                         </a>
                                     </form>
                                 </div>

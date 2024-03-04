@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gallery;
-use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -22,8 +22,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        $galleries = Gallery::all();
-        return view('galleries.create', compact('galleries'));
+        return view('galleries.create');
     }
 
     /**
@@ -31,7 +30,21 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'caption' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            auth()->user()->galleries()->create([
+                'caption' => $request->input('caption'),
+                // $request->file('image')でアップロードされたファイルを取得できるので、
+                //store()メソッドを使ってアップロードされたファイルを指定されたディレクトリに保存した後、保存されたファイルのパスを取得
+                'image' => $request->file('image')->store('galleries', 'public')
+            ]);
+            return to_route('galleries.index');
+        }
+        return back();
     }
 
     /**
@@ -45,24 +58,42 @@ class GalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Gallery $gallery)
     {
-        //
+
+        return view('galleries.edit', compact('gallery'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Gallery $gallery)
     {
-        //
+        $path = $gallery->image;
+        $this->validate($request, [
+            'caption' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1048',
+        ]);
+
+        if($request->hasFile('image')) {
+            Storage::delete($gallery->image);
+            $path = $request->file('image')->store('galleries', 'public');
+        }
+
+        $gallery->update([
+            'caption' => $request->input('caption'),
+            'image' => $path
+        ]);
+        return to_route('galleries.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Gallery $gallery)
     {
-        //
+        Storage::delete($gallery->image); // ストレージから削除
+        $gallery->delete(); // DBから削除
+        return back();
     }
 }
