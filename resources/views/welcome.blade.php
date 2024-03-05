@@ -10,7 +10,7 @@
                     <img class="object-cover w-full h-56 rounded-lg lg:w-64" src="{{asset('/storage/'.$event->image)}}" alt="{{$event->title}}">
 
                     <div class="flex flex-col justify-between py-6 lg:mx-6">
-                        <a href="#" class="text-xl font-semibold text-gray-800 hover:underline dark:text-white ">
+                        <a href="{{route('eventShow', $event->id)}}" class="text-xl font-semibold text-gray-800 hover:underline dark:text-white ">
                             {{$event->title}}
                         </a>
                         <span class="text-sm text-white dark:text-gray-300 bg-indigo-400 rounded-md p-2">開催国: {{$event->country->name}}</span>

@@ -27,6 +27,10 @@ class Event extends Model
         'city_id'
     ];
 
+    protected $casts = [
+        'start_date' => 'date:Y/m/d'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
