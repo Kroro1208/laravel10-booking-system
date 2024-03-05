@@ -13,6 +13,9 @@ class EventShowController extends Controller
         // 特定のイベントに対して現在認証されているユーザーが「いいね」をしているかどうかを確認する処理
         // first()で最初のレコードを取得して同じイベントに複数回いいねしてもカウントしないようにする
         $like = $event->likes()->where('user_id', auth()->id())->first();
-        return view('eventShow', compact('event', 'like'));
+        $savedEvent = $event->savedEvents()->where('user_id', auth()->id())->first();
+        $attending = $event->attendings()->where('user_id', auth()->id())->first();
+
+        return view('eventShow', compact('event', 'like', 'savedEvent', 'attending'));
     }
 }
