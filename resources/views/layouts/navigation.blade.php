@@ -26,6 +26,21 @@
                         {{ __('Gallery') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('likedEvents')" :active="request()->routeIs('likedEvents')">
+                        {{ __('Liked Events') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('savedEvents')" :active="request()->routeIs('savedEvents')">
+                        {{ __('Saved Events') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('attendingEvents')" :active="request()->routeIs('attendingEvents')">
+                        {{ __('Attending Events') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
