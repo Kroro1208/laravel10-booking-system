@@ -28,7 +28,8 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'start_date' => 'date:Y/m/d'
+        'start_date' => 'date:Y/m/d',
+        'end_date' => 'date:Y/m/d'
     ];
 
     public function user(): BelongsTo
@@ -75,5 +76,15 @@ class Event extends Model
     public function hasTag($tag)
     {
         return $this->tags->contains($tag); // $thisはEventモデル
+    }
+
+    public function getStartDateForInputAttribute()
+    {
+        return $this->start_date->format('Y-m-d');
+    }
+
+    public function getEndDateForInputAttribute()
+    {
+        return $this->end_date->format('Y-m-d');
     }
 }
