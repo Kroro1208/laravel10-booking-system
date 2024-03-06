@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/events-save/{id}', SaveSystemController::class)->name('events.save');
     Route::post('/events-attending/{id}', AttendingSystemController::class)->name('events.attending');
     Route::post('events/{id}/comments', StoreCommentController::class)->name('events.comments');
-    Route::post('events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
+    Route::delete('events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
     Route::get('/countries/{country}', function (Country $country) {
         return response()->json($country->cities);
     });
