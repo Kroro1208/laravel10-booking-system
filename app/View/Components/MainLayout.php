@@ -12,6 +12,6 @@ class MainLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.main');
+        return view('layouts.main'); // このファイルはx-main-layoutだけどこの行でlayouts/main.blade.phpをレンダリングしている
     }
 }
