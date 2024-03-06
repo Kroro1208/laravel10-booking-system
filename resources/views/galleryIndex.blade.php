@@ -8,6 +8,7 @@
                 @foreach($galleries as $gallery)
                 <div class="lg:flex bg-slate-100 rounded-md">
                     <img class="object-cover w-full h-56 rounded-lg lg:w-64" src="{{asset('/storage/'.$gallery->image)}}" alt="{{$gallery->caption}}">
+                    <p class="p-3 font-semibold">{{$gallery->caption}}</p>
                 </div>
                 @endforeach
             </div>
