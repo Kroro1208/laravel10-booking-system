@@ -5,7 +5,8 @@
                 イベント一覧
             </h2>
             <div>
-                <a href="{{route('events.create')}}" class="dark:text-white hover:text-slate-200">新規イベント作成</a>
+                <a href="{{route('events.create')}}" class="w-1/3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5  text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    新規イベント作成</a>
             </div>
         </div>
     </x-slot>
